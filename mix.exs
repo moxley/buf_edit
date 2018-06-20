@@ -4,12 +4,15 @@ defmodule Buffer.MixProject do
   def project do
     [
       app: :buffer,
+      name: "Buffer",
+      description: "A line editor for Elixir, similar in concept to ed",
       version: "0.1.0",
       elixir: "~> 1.6",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
       package: package(),
-      docs: docs()
+      docs: docs(),
+      source_url: "https://github.com/moxley/ex_buffer"
     ]
   end
 
@@ -30,8 +33,7 @@ defmodule Buffer.MixProject do
     [
       maintainers: ["Moxley Stratton"],
       licenses: ["Apache 2.0"],
-      links: %{"GitHub" => "https://github.com/moxley/ex_buffer"},
-      files: ~w(.formatter.exs mix.exs README.md LICENSE lib)
+      links: %{"GitHub" => "https://github.com/moxley/ex_buffer"}
     ]
   end
 
