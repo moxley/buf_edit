@@ -8,11 +8,8 @@ defmodule Buffer.MixProject do
       elixir: "~> 1.6",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
-      docs: [
-        # The main page in the docs
-        main: "Buffer",
-        extras: ["README.md"]
-      ]
+      package: package(),
+      docs: docs()
     ]
   end
 
@@ -26,6 +23,23 @@ defmodule Buffer.MixProject do
   defp deps do
     [
       {:ex_doc, "~> 0.16", only: :dev, runtime: false}
+    ]
+  end
+
+  defp package do
+    [
+      maintainers: ["Moxley Stratton"],
+      licenses: ["Apache 2.0"],
+      links: %{"GitHub" => "https://github.com/moxley/ex_buffer"},
+      files: ~w(.formatter.exs mix.exs README.md LICENSE lib)
+    ]
+  end
+
+  defp docs do
+    [
+      # The main page in the docs
+      main: "Buffer",
+      extras: ["README.md"]
     ]
   end
 end
