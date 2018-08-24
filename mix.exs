@@ -3,7 +3,7 @@ defmodule BufEdit.MixProject do
 
   def project do
     [
-      app: :buffer,
+      app: :buf_edit,
       name: "BufEdit",
       description: "A line editor for Elixir, similar in concept to ed",
       version: "0.1.0",
