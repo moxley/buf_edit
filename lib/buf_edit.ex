@@ -1,8 +1,8 @@
-defmodule Buffer do
+defmodule BufEdit do
   @moduledoc """
   Programmable buffer editor, similar in concept to [ed](https://en.wikipedia.org/wiki/Ed_(text_editor)).
 
-  `Buffer` reads a file into memory and provides a flexible API for editing it and writing
+  `BufEdit` reads a file into memory and provides a flexible API for editing it and writing
   it back to a file.
 
   Consider the following mix.exs file:
@@ -38,13 +38,13 @@ defmodule Buffer do
   end
   ```
 
-  We'll use `Buffer` to load the file and jump to a line matching a regular
+  We'll use `BufEdit` to load the file and jump to a line matching a regular
   expression:
 
   ```elixir
-  iex> buf = Buffer.load("mix.exs")
-  iex> buf = Buffer.search(buf, ~r/defp deps/, :down)
-  %Buffer{
+  iex> buf = BufEdit.load("mix.exs")
+  iex> buf = BufEdit.search(buf, ~r/defp deps/, :down)
+  %BufEdit{
     col: 1,
     filename: "test/fixtures/mix.exs",
     lines: ["defmodule MyApp.MixProject do", "  use Mix.Project", ""],
@@ -55,15 +55,15 @@ defmodule Buffer do
 
   (The `lines` key value above has been abbreviated in this example)
 
-  If the line is found, the returned `%Buffer{}` has a `:status` key set to `:ok`,
+  If the line is found, the returned `%BufEdit{}` has a `:status` key set to `:ok`,
   and the `:line_num` key is set to the new line number.
 
   Now, let's say we want to remove the two comment lines from the dependencies
   list and add a new dependency:
 
   ```elixir
-  iex> buf = Buffer.search(buf, ~r/^\s*#/, :down)
-  %Buffer{
+  iex> buf = BufEdit.search(buf, ~r/^\s*#/, :down)
+  %BufEdit{
     col: 1,
     filename: "test/fixtures/mix.exs",
     lines: ["defmodule MyApp.MixProject do", "  use Mix.Project", ""],
@@ -75,7 +75,7 @@ defmodule Buffer do
   Now, we're at line 24. If you want to see line 24, use `line/1`:
 
   ```elixir
-  iex> Buffer.line(buf)
+  iex> BufEdit.line(buf)
   "      # {:dep_from_hexpm, \\"~> 0.3.0\\"},"
   ```
 
@@ -84,23 +84,23 @@ defmodule Buffer do
   The next step is to delete the two comments:
 
   ```elixir
-  iex> buf = Buffer.delete_lines(buf, 2)
-  %Buffer{
+  iex> buf = BufEdit.delete_lines(buf, 2)
+  %BufEdit{
     col: 1,
     filename: "test/fixtures/mix.exs",
     lines: ["defmodule MyApp.MixProject do", "  use Mix.Project", ""],
     line_num: 24,
     status: :ok
   }
-  iex> Buffer.line(buf)
+  iex> BufEdit.line(buf)
   "    ]"
   ```
 
   Now that the lines are deleted, we're ready to add the new dependency:
 
   ```elixir
-  iex> buf = Buffer.insert_line(buf, "      {:buffer, \\"~> 0.1.0\\"}")
-  iex> Buffer.dump(buf) |> IO.puts()
+  iex> buf = BufEdit.insert_line(buf, "      {:buffer, \\"~> 0.1.0\\"}")
+  iex> BufEdit.dump(buf) |> IO.puts()
   defmodule MyApp.MixProject do
     use Mix.Project
 
@@ -133,7 +133,7 @@ defmodule Buffer do
   Our new dependency is added! Now it's time to write the file, then we're done:
 
   ```elixir
-  iex> Buffer.save(buf)
+  iex> BufEdit.save(buf)
   ```
   """
 
@@ -163,13 +163,13 @@ defmodule Buffer do
     }
   end
 
-  @doc "Dump the Buffer to a string"
+  @doc "Dump the BufEdit to a string"
   @spec dump(t()) :: String.t()
   def dump(buf) do
     Enum.join(buf.lines, "\n")
   end
 
-  @doc "Save the Buffer to a file specified by the `:filename` value."
+  @doc "Save the BufEdit to a file specified by the `:filename` value."
   @spec save(t()) :: :ok | no_return()
   def save(buf) do
     File.write!(buf.filename, dump(buf))
@@ -289,7 +289,7 @@ defmodule Buffer do
   Commenting out a line of Elixir:
 
   ```
-  iex> Buffer.replace_line(buf, fn _buf, line -> "# \#{line}" end)
+  iex> BufEdit.replace_line(buf, fn _buf, line -> "# \#{line}" end)
   ```
   """
   @spec replace_line(t(), (t(), line :: String.t() -> String.t())) :: t()

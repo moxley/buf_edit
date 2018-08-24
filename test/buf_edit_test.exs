@@ -1,7 +1,7 @@
-defmodule BufferTest do
+defmodule BufEditTest do
   @moduledoc false
   use ExUnit.Case, async: true
-  import Buffer
+  import BufEdit
 
   test "search :down" do
     buf = load("test/fixtures/test.txt")

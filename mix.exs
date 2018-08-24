@@ -1,10 +1,10 @@
-defmodule Buffer.MixProject do
+defmodule BufEdit.MixProject do
   use Mix.Project
 
   def project do
     [
       app: :buffer,
-      name: "Buffer",
+      name: "BufEdit",
       description: "A line editor for Elixir, similar in concept to ed",
       version: "0.1.0",
       elixir: "~> 1.6",
@@ -12,7 +12,7 @@ defmodule Buffer.MixProject do
       deps: deps(),
       package: package(),
       docs: docs(),
-      source_url: "https://github.com/moxley/ex_buffer"
+      source_url: "https://github.com/moxley/buf_edit"
     ]
   end
 
@@ -33,14 +33,14 @@ defmodule Buffer.MixProject do
     [
       maintainers: ["Moxley Stratton"],
       licenses: ["Apache 2.0"],
-      links: %{"GitHub" => "https://github.com/moxley/ex_buffer"}
+      links: %{"GitHub" => "https://github.com/moxley/buf_edit"}
     ]
   end
 
   defp docs do
     [
       # The main page in the docs
-      main: "Buffer",
+      main: "BufEdit",
       extras: ["README.md"]
     ]
   end
