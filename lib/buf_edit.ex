@@ -142,7 +142,7 @@ defmodule BufEdit do
           lines: [String.t()],
           line_num: integer(),
           col: integer(),
-          status: atom()
+          status: :ok | :not_found
         }
 
   defstruct filename: nil,
